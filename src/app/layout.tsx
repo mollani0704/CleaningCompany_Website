@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { FloatingCta } from "./_components/floating-cta";
 import { SiteHeader } from "./_components/site-header";
+import { SiteFooter } from "./_components/site-footer";
 
 export const metadata: Metadata = {
   title: "청남방 | 청소회사 소개페이지",
@@ -18,7 +20,9 @@ export default function RootLayout({
         <div className="flex min-h-full flex-col">
           <SiteHeader />
           <main className="flex-1">{children}</main>
+          <SiteFooter />
         </div>
+        <FloatingCta />
       </body>
     </html>
   );
