@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const navigationItems = [
@@ -12,12 +13,18 @@ export function SiteHeader() {
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-4 sm:px-8 lg:px-10">
         <Link
           href="/"
-          className="flex items-center gap-3 transition-transform duration-200 hover:-translate-y-0.5"
+          className="flex items-center gap-4 transition-transform duration-200 hover:-translate-y-0.5"
         >
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/35 bg-white/14 shadow-[inset_0_1px_0_rgba(255,255,255,0.24)] backdrop-blur">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-sm font-black tracking-[0.18em] text-primary">
-              DJ
-            </div>
+          <div className="relative flex h-20 w-20 items-center justify-center">
+            <div className="absolute inset-[0.7rem] rounded-full bg-white/96 shadow-[0_10px_20px_rgba(15,23,42,0.12)]" />
+            <Image
+              src="/images/company_logo.png"
+              alt="대주종합청소 로고"
+              width={72}
+              height={72}
+              className="relative z-10 h-[4.6rem] w-[4.6rem] object-contain drop-shadow-[0_8px_16px_rgba(15,23,42,0.12)]"
+              priority
+            />
           </div>
           <div className="flex flex-col">
             <span className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-white/70">
