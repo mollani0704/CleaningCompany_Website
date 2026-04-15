@@ -1,66 +1,43 @@
-import Link from "next/link";
-
-const quickLinks = [
-  {
-    href: "/company",
-    label: "회사소개",
-    title: "대주종합청소의 기준과 철학 보기",
-    description:
-      "브랜드가 어떤 방식으로 청소 품질과 신뢰를 관리하는지 소개합니다.",
-  },
-  {
-    href: "/cases",
-    label: "작업사례",
-    title: "공간별 대표 작업사례 보기",
-    description:
-      "사무실, 매장, 주거 공간 등 현장별 작업 유형을 한눈에 살펴볼 수 있습니다.",
-  },
-  {
-    href: "/contact",
-    label: "문의",
-    title: "상담 채널과 운영시간 확인",
-    description:
-      "전화와 카카오톡 등 실제 상담으로 이어지는 문의 정보를 빠르게 확인할 수 있습니다.",
-  },
-];
+import {HeroImageSlider} from './_components/hero-image-slider';
+import Link from 'next/link';
 
 const strengths = [
   {
-    value: "01",
-    title: "체계적인 현장 체크",
+    value: '01',
+    title: '체계적인 현장 체크',
     description:
-      "공간 유형에 맞춘 체크리스트로 청소 범위와 우선순위를 명확하게 관리합니다.",
+      '공간 유형에 맞춘 체크리스트로 청소 범위와 우선순위를 명확하게 관리합니다.',
   },
   {
-    value: "02",
-    title: "단정한 서비스 인상",
+    value: '02',
+    title: '단정한 서비스 인상',
     description:
-      "대주종합청소의 블루 앤 화이트 톤처럼 깔끔하고 신뢰감 있는 응대를 지향합니다.",
+      '대주종합청소의 블루 앤 화이트 톤처럼 깔끔하고 신뢰감 있는 응대를 지향합니다.',
   },
   {
-    value: "03",
-    title: "빠른 상담 연결",
+    value: '03',
+    title: '빠른 상담 연결',
     description:
-      "전화와 카카오톡 CTA로 고객이 고민 없이 바로 문의할 수 있게 설계했습니다.",
+      '전화와 카카오톡 CTA로 고객이 고민 없이 바로 문의할 수 있게 설계했습니다.',
   },
 ];
 
 const workflow = [
   {
-    step: "상담 접수",
-    detail: "공간 유형과 희망 일정을 간단히 확인합니다.",
+    step: '상담 접수',
+    detail: '공간 유형과 희망 일정을 간단히 확인합니다.',
   },
   {
-    step: "작업 범위 안내",
-    detail: "청소 범위와 예상 소요 시간을 명확하게 전달합니다.",
+    step: '작업 범위 안내',
+    detail: '청소 범위와 예상 소요 시간을 명확하게 전달합니다.',
   },
   {
-    step: "현장 진행",
-    detail: "우선 구역부터 정리하며 깔끔한 결과를 완성합니다.",
+    step: '현장 진행',
+    detail: '우선 구역부터 정리하며 깔끔한 결과를 완성합니다.',
   },
   {
-    step: "마무리 확인",
-    detail: "고객과 함께 결과를 확인하고 필요한 부분을 점검합니다.",
+    step: '마무리 확인',
+    detail: '고객과 함께 결과를 확인하고 필요한 부분을 점검합니다.',
   },
 ];
 
@@ -86,25 +63,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid gap-4">
-            {quickLinks.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="rounded-[24px] border border-slate-200 bg-white p-6 shadow-[0_18px_50px_rgba(37,99,235,0.08)] transition-transform duration-200 hover:-translate-y-1"
-              >
-                <p className="text-xs font-bold tracking-[0.2em] text-primary">
-                  {item.label}
-                </p>
-                <h2 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-slate-950">
-                  {item.title}
-                </h2>
-                <p className="mt-3 text-sm leading-7 text-slate-600">
-                  {item.description}
-                </p>
-              </Link>
-            ))}
-          </div>
+          <HeroImageSlider />
         </div>
       </section>
 
@@ -121,7 +80,7 @@ export default function Home() {
         </div>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-3">
-          {strengths.map((item) => (
+          {strengths.map(item => (
             <article
               key={item.value}
               className="rounded-[24px] border border-slate-200 bg-white p-7 shadow-[0_18px_50px_rgba(37,99,235,0.08)]"
