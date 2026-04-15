@@ -1,3 +1,5 @@
+import {CaseReviewForm} from '../_components/case-review-form';
+
 const caseItems = [
   '사무실 정기 청소 카드',
   '매장 오픈 전후 관리 카드',
@@ -19,6 +21,8 @@ export default function AdminCasesPage() {
         관리하는 화면입니다. 추후 이미지 업로드나 사례 추가 기능과 연결하기 좋은
         구조로 준비했습니다.
       </p>
+
+      <CaseReviewForm />
 
       <div className="mt-10 grid gap-4 lg:grid-cols-2">
         {caseItems.map(item => (
