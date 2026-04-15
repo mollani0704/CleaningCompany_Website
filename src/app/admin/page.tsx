@@ -1,18 +1,23 @@
+import {HeroImageManager} from './_components/hero-image-manager';
+
 const dashboardCards = [
   {
     label: '메인 페이지',
     title: '홈 콘텐츠 수정 준비',
-    description: '메인 배너, 신뢰 요소, CTA 영역 내용을 관리할 수 있도록 확장할 수 있습니다.',
+    description:
+      '메인 배너, 신뢰 요소, CTA 영역 내용을 관리할 수 있도록 확장할 수 있습니다.',
   },
   {
     label: '문의 관리',
     title: '접수 내용 등록 흐름',
-    description: '전화, 카카오톡, 이메일로 들어온 문의를 한곳에서 정리하는 용도로 확장 가능합니다.',
+    description:
+      '전화, 카카오톡, 이메일로 들어온 문의를 한곳에서 정리하는 용도로 확장 가능합니다.',
   },
   {
     label: '운영 상태',
     title: '관리자 페이지 기본 구조 완료',
-    description: '사이드바는 유지되고 본문만 바뀌는 관리자 전용 레이아웃이 준비되었습니다.',
+    description:
+      '사이드바는 유지되고 본문만 바뀌는 관리자 전용 레이아웃이 준비되었습니다.',
   },
 ];
 
@@ -49,6 +54,8 @@ export default function AdminPage() {
           </article>
         ))}
       </div>
+
+      <HeroImageManager />
     </div>
   );
 }
