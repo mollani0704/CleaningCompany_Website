@@ -1,8 +1,9 @@
 'use client';
 
 import {type ReactNode, useEffect, useId, useState} from 'react';
-import {supabase} from '@/app/lib/supabase';
-import {CaseReviewForm, type ReviewRecord} from './case-review-form';
+import {useQuery} from '@tanstack/react-query';
+import {CaseReviewForm} from './case-review-form';
+import {fetchReviews, reviewsQueryKey} from '../_lib/reviews';
 
 function formatReviewDate(dateString: string | null) {
   if (!dateString) {
@@ -21,11 +22,6 @@ function formatReviewDate(dateString: string | null) {
     day: '2-digit',
   }).format(date);
 }
-
-type CaseReviewsManagerProps = {
-  initialError: string | null;
-  initialReviews: ReviewRecord[];
-};
 
 type ReviewModalProps = {
   children: ReactNode;
@@ -85,81 +81,24 @@ function ReviewModal({
   );
 }
 
-export function CaseReviewsManager({
-  initialError,
-  initialReviews,
-}: CaseReviewsManagerProps) {
-  const [reviews, setReviews] = useState(initialReviews);
+export function CaseReviewsManager() {
   const [selectedReviewId, setSelectedReviewId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(initialError);
+  const {
+    data: reviews = [],
+    error,
+    isLoading,
+  } = useQuery({
+    queryKey: reviewsQueryKey,
+    queryFn: fetchReviews,
+  });
 
-  async function loadReviews(selectedId?: string | null) {
-    setIsLoading(true);
-    setErrorMessage(null);
-
-    const {data, error} = await supabase
-      .from('reviews')
-      .select('id, title, content, created_at')
-      .order('created_at', {ascending: false});
-
-    if (error) {
-      setErrorMessage(error.message);
-      setIsLoading(false);
-      return;
-    }
-
-    const nextReviews = (data ?? []) as ReviewRecord[];
-    setReviews(nextReviews);
-
-    const nextSelectedId =
-      selectedId === undefined ? selectedReviewId : selectedId;
-
-    if (nextSelectedId) {
-      const hasSelectedReview = nextReviews.some(
-        review => review.id === nextSelectedId,
-      );
-
-      setSelectedReviewId(hasSelectedReview ? nextSelectedId : null);
-    } else {
-      setSelectedReviewId(null);
-    }
-
-    setIsLoading(false);
-  }
-
-  useEffect(() => {
-    let isActive = true;
-
-    async function refreshReviews() {
-      const {data, error} = await supabase
-        .from('reviews')
-        .select('id, title, content, created_at')
-        .order('created_at', {ascending: false});
-
-      if (!isActive) {
-        return;
-      }
-
-      if (error) {
-        setErrorMessage(error.message);
-        return;
-      }
-
-      setErrorMessage(null);
-      setReviews((data ?? []) as ReviewRecord[]);
-    }
-
-    void refreshReviews();
-
-    return () => {
-      isActive = false;
-    };
-  }, []);
+  const errorMessage = error instanceof Error ? error.message : null;
 
   const selectedReview =
-    reviews.find(review => review.id === selectedReviewId) ?? null;
+    selectedReviewId === null
+      ? null
+      : reviews.find(review => review.id === selectedReviewId) ?? null;
 
   const isEditing = selectedReview !== null;
 
@@ -271,7 +210,7 @@ export function CaseReviewsManager({
             review={selectedReview}
             onCancel={closeModal}
             onSaved={async savedReviewId => {
-              await loadReviews(savedReviewId);
+              setSelectedReviewId(savedReviewId);
               closeModal();
             }}
           />

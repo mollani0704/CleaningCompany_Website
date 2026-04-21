@@ -1,14 +1,5 @@
-import {supabase} from '@/app/lib/supabase';
 import {CaseReviewsManager} from '../_components/case-reviews-manager';
-import {type ReviewRecord} from '../_components/case-review-form';
-
-export const dynamic = 'force-dynamic';
-
-export default async function AdminCasesPage() {
-  const {data, error} = await supabase
-    .from('reviews')
-    .select('id, title, content, created_at')
-    .order('created_at', {ascending: false});
+export default function AdminCasesPage() {
 
   return (
     <div className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_18px_50px_rgba(37,99,235,0.08)] sm:p-10">
@@ -23,10 +14,7 @@ export default async function AdminCasesPage() {
         모달 창에서 진행할 수 있습니다.
       </p>
 
-      <CaseReviewsManager
-        initialError={error?.message ?? null}
-        initialReviews={(data ?? []) as ReviewRecord[]}
-      />
+      <CaseReviewsManager />
     </div>
   );
 }

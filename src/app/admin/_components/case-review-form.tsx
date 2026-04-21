@@ -1,7 +1,12 @@
 'use client';
 
 import {FormEvent, useState} from 'react';
-import {supabase} from '@/app/lib/supabase';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {
+  createReview,
+  reviewsQueryKey,
+  updateReview,
+} from '../_lib/reviews';
 
 export type ReviewRecord = {
   id: string;
@@ -23,9 +28,34 @@ export function CaseReviewForm({
 }: CaseReviewFormProps) {
   const [title, setTitle] = useState(review?.title ?? '');
   const [content, setContent] = useState(review?.content ?? '');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+
+  const saveReviewMutation = useMutation({
+    mutationFn: async ({
+      content,
+      title,
+    }: {
+      content: string;
+      title: string;
+    }) => {
+      if (review) {
+        return updateReview({
+          reviewId: review.id,
+          title,
+          content,
+        });
+      }
+
+      return createReview({
+        title,
+        content,
+      });
+    },
+  });
+
+  const isSubmitting = saveReviewMutation.isPending;
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -39,57 +69,37 @@ export function CaseReviewForm({
       return;
     }
 
-    setIsSubmitting(true);
     setErrorMessage(null);
     setMessage(null);
 
-    let savedReviewId = review?.id;
+    try {
+      const savedReviewId = await saveReviewMutation.mutateAsync({
+        title: trimmedTitle,
+        content: trimmedContent,
+      });
 
-    const {data, error} = review
-      ? await supabase
-          .from('reviews')
-          .update({
-            title: trimmedTitle,
-            content: trimmedContent,
-          })
-          .eq('id', review.id)
-      : await supabase
-          .from('reviews')
-          .insert([
-            {
-              title: trimmedTitle,
-              content: trimmedContent,
-            },
-          ])
-          .select('id')
-          .maybeSingle();
+      await queryClient.invalidateQueries({queryKey: reviewsQueryKey});
 
-    if (error) {
-      setErrorMessage(error.message);
-      setIsSubmitting(false);
+      setMessage(
+        review
+          ? '작업사례가 reviews 테이블에서 수정되었습니다.'
+          : '작업사례가 reviews 테이블에 등록되었습니다.',
+      );
+
+      if (!review) {
+        setTitle('');
+        setContent('');
+      }
+
+      await onSaved?.(savedReviewId);
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : '작업사례 저장 중 오류가 발생했습니다.',
+      );
       return;
     }
-
-    if (!review) {
-      savedReviewId = data?.id;
-    }
-
-    setMessage(
-      review
-        ? '작업사례가 reviews 테이블에서 수정되었습니다.'
-        : '작업사례가 reviews 테이블에 등록되었습니다.',
-    );
-
-    if (!review) {
-      setTitle('');
-      setContent('');
-    }
-
-    if (savedReviewId) {
-      await onSaved?.(savedReviewId);
-    }
-
-    setIsSubmitting(false);
   }
 
   return (
