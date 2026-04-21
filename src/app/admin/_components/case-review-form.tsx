@@ -13,11 +13,13 @@ export type ReviewRecord = {
 type CaseReviewFormProps = {
   review?: ReviewRecord | null;
   onSaved?: (reviewId: string) => Promise<void> | void;
+  onCancel?: () => void;
 };
 
 export function CaseReviewForm({
   review = null,
   onSaved,
+  onCancel,
 }: CaseReviewFormProps) {
   const [title, setTitle] = useState(review?.title ?? '');
   const [content, setContent] = useState(review?.content ?? '');
@@ -41,6 +43,8 @@ export function CaseReviewForm({
     setErrorMessage(null);
     setMessage(null);
 
+    let savedReviewId = review?.id;
+
     const {data, error} = review
       ? await supabase
           .from('reviews')
@@ -49,8 +53,6 @@ export function CaseReviewForm({
             content: trimmedContent,
           })
           .eq('id', review.id)
-          .select('id')
-          .single()
       : await supabase
           .from('reviews')
           .insert([
@@ -60,7 +62,7 @@ export function CaseReviewForm({
             },
           ])
           .select('id')
-          .single();
+          .maybeSingle();
 
     if (error) {
       setErrorMessage(error.message);
@@ -68,7 +70,9 @@ export function CaseReviewForm({
       return;
     }
 
-    const savedReviewId = data?.id ?? review?.id;
+    if (!review) {
+      savedReviewId = data?.id;
+    }
 
     setMessage(
       review
@@ -90,18 +94,31 @@ export function CaseReviewForm({
 
   return (
     <section className="rounded-[24px] border border-slate-200 bg-slate-50 p-6 sm:p-7">
-      <div className="flex flex-col gap-2">
-        <p className="text-xs font-bold tracking-[0.2em] text-primary">
-          CASE FORM
-        </p>
-        <h2 className="text-2xl font-black tracking-[-0.03em] text-slate-950">
-          {review ? '작업사례 수정' : '작업사례 등록'}
-        </h2>
-        <p className="text-sm leading-7 text-slate-600">
-          {review
-            ? '선택한 작업사례의 제목과 내용을 수정한 뒤 저장할 수 있습니다.'
-            : '새 작업사례를 등록하려면 제목과 내용을 입력해주세요.'}
-        </p>
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex flex-col gap-2">
+          <p className="text-xs font-bold tracking-[0.2em] text-primary">
+            CASE FORM
+          </p>
+          <h2 className="text-2xl font-black tracking-[-0.03em] text-slate-950">
+            {review ? '작업사례 수정' : '작업사례 등록'}
+          </h2>
+          <p className="text-sm leading-7 text-slate-600">
+            {review
+              ? '선택한 작업사례의 제목과 내용을 수정한 뒤 저장할 수 있습니다.'
+              : '새 작업사례를 등록하려면 제목과 내용을 입력해주세요.'}
+          </p>
+        </div>
+
+        {onCancel ? (
+          <button
+            type="button"
+            onClick={onCancel}
+            aria-label="모달 닫기"
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-xl font-semibold leading-none text-slate-700 transition-colors duration-200 hover:border-slate-300 hover:bg-slate-100"
+          >
+            <span className="-translate-y-px">×</span>
+          </button>
+        ) : null}
       </div>
 
       <form onSubmit={handleSubmit} className="mt-6 grid gap-5">
@@ -147,7 +164,16 @@ export function CaseReviewForm({
           </p>
         ) : null}
 
-        <div className="flex justify-end">
+        <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+          {onCancel ? (
+            <button
+              type="button"
+              onClick={onCancel}
+              className="rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition-colors duration-200 hover:border-slate-300 hover:bg-slate-100"
+            >
+              취소
+            </button>
+          ) : null}
           <button
             type="submit"
             disabled={isSubmitting}

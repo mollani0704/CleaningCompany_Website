@@ -19,8 +19,8 @@ export default async function AdminCasesPage() {
         작업사례 관리
       </h1>
       <p className="mt-5 max-w-3xl text-base leading-8 text-slate-600">
-        reviews 테이블에 저장된 작업사례를 불러와 목록으로 확인하고, 선택한
-        사례의 제목과 내용을 바로 수정할 수 있습니다.
+        reviews 테이블에 저장된 작업사례를 목록으로 관리하고, 등록과 수정은
+        모달 창에서 진행할 수 있습니다.
       </p>
 
       <CaseReviewsManager
