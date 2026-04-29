@@ -2,6 +2,18 @@ import {supabase} from '@/app/lib/supabase';
 import {type ReviewRecord} from '../_components/case-review-form';
 
 export const reviewsQueryKey = ['reviews'] as const;
+export const reviewImagesQueryKey = ['review-images'] as const;
+
+const REVIEW_IMAGES_BUCKET = 'review-images';
+
+export type ReviewImageRecord = {
+  id: string;
+  review_id: string;
+  image_url: string;
+  storage_path: string;
+  display_order: number | null;
+  created_at: string | null;
+};
 
 export async function fetchReviews(): Promise<ReviewRecord[]> {
   const {data, error} = await supabase
@@ -69,4 +81,77 @@ export async function updateReview({
   }
 
   return reviewId;
+}
+
+export async function fetchReviewImages(
+  reviewId: string,
+): Promise<ReviewImageRecord[]> {
+  const {data, error} = await supabase
+    .from('review-images')
+    .select('id, review_id, image_url, storage_path, display_order, created_at')
+    .eq('review_id', reviewId)
+    .order('display_order', {ascending: true})
+    .order('created_at', {ascending: true});
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return (data ?? []) as ReviewImageRecord[];
+}
+
+type UploadReviewImagesInput = {
+  files: File[];
+  reviewId: string;
+  startOrder?: number;
+};
+
+export async function uploadReviewImages({
+  files,
+  reviewId,
+  startOrder = 0,
+}: UploadReviewImagesInput): Promise<void> {
+  if (files.length === 0) {
+    return;
+  }
+
+  const uploadedImages = await Promise.all(
+    files.map(async (file, index) => {
+      const extension = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+      const safeName = `${crypto.randomUUID()}.${extension}`;
+      const storagePath = `public/${reviewId}/${safeName}`;
+
+      console.log('storagePath ===>', storagePath);
+
+      const {error: uploadError} = await supabase.storage
+        .from(REVIEW_IMAGES_BUCKET)
+        .upload(storagePath, file, {
+          cacheControl: '3600',
+          contentType: file.type,
+          upsert: false,
+        });
+
+      if (uploadError) {
+        throw new Error(uploadError.message);
+      }
+
+      const {data: publicUrlData} = supabase.storage
+        .from(REVIEW_IMAGES_BUCKET)
+        .getPublicUrl(storagePath);
+
+      return {
+        review_id: reviewId,
+        image_url: publicUrlData.publicUrl,
+        file_path: storagePath,
+        storage_path: storagePath,
+        display_order: startOrder + index,
+      };
+    }),
+  );
+
+  const {error} = await supabase.from('review-images').insert(uploadedImages);
+
+  if (error) {
+    throw new Error(error.message);
+  }
 }
