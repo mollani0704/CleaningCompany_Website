@@ -7,7 +7,7 @@ const navigationItems = [
   { label: "문의", href: "/contact" },
 ];
 
-export function SiteHeader() {
+const SiteHeader = () => {
   return (
     <header className="sticky top-0 z-50 border-b border-white/15 bg-primary text-white shadow-[0_14px_40px_rgba(15,23,42,0.22)]">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-4 sm:px-8 lg:px-10">
@@ -53,4 +53,6 @@ export function SiteHeader() {
       </div>
     </header>
   );
-}
+};
+
+export default SiteHeader;

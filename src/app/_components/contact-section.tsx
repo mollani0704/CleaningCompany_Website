@@ -13,7 +13,7 @@ const contactItems = [
   },
 ];
 
-export function ContactSection() {
+const ContactSection = () => {
   return (
     <section className="mx-auto w-full max-w-7xl px-6 py-24 sm:px-8 lg:px-10">
       <div className="rounded-[28px] bg-linear-to-br from-slate-950 via-primary to-secondary px-8 py-10 text-white shadow-[0_25px_80px_rgba(30,58,138,0.24)] sm:px-10 sm:py-12">
@@ -51,4 +51,6 @@ export function ContactSection() {
       </div>
     </section>
   );
-}
+};
+
+export default ContactSection;

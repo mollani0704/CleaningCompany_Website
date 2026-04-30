@@ -30,15 +30,15 @@ const MAX_REVIEW_IMAGES = 5;
 const MAX_REVIEW_IMAGE_SIZE = 10 * 1024 * 1024;
 const MAX_REVIEW_IMAGES_TOTAL_SIZE = 50 * 1024 * 1024;
 
-function formatFileSize(size: number) {
+const formatFileSize = (size: number) => {
   return `${(size / 1024 / 1024).toFixed(2)} MB`;
-}
+};
 
-export function CaseReviewForm({
+const CaseReviewForm = ({
   review = null,
   onSaved,
   onCancel,
-}: CaseReviewFormProps) {
+}: CaseReviewFormProps) => {
   const [title, setTitle] = useState(review?.title ?? '');
   const [content, setContent] = useState(review?.content ?? '');
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -114,7 +114,7 @@ export function CaseReviewForm({
   const isDeletingImage = deleteReviewImageMutation.isPending;
   const currentImageCount = existingImages.length + selectedFiles.length;
 
-  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const incomingFiles = Array.from(event.target.files ?? []);
     const nextFiles = [...selectedFiles, ...incomingFiles];
     const oversizedFile = incomingFiles.find(
@@ -150,28 +150,28 @@ export function CaseReviewForm({
 
     setSelectedFiles(nextFiles);
     setErrorMessage(null);
-  }
+  };
 
-  function removeSelectedFile(targetIndex: number) {
+  const removeSelectedFile = (targetIndex: number) => {
     setSelectedFiles(current =>
       current.filter((_, fileIndex) => fileIndex !== targetIndex),
     );
-  }
+  };
 
-  function handleExistingImageDelete({
+  const handleExistingImageDelete = ({
     imageId,
     storagePath,
   }: {
     imageId: string;
     storagePath: string;
-  }) {
+  }) => {
     deleteReviewImageMutation.mutate({
       imageId,
       storagePath,
     });
-  }
+  };
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const trimmedTitle = title.trim();
@@ -222,7 +222,7 @@ export function CaseReviewForm({
       );
       return;
     }
-  }
+  };
 
   return (
     <section className="rounded-[24px] border border-slate-200 bg-slate-50 p-6 sm:p-7">
@@ -450,4 +450,6 @@ export function CaseReviewForm({
       </form>
     </section>
   );
-}
+};
+
+export default CaseReviewForm;

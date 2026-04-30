@@ -1,9 +1,9 @@
 import type {Metadata} from 'next';
 import './globals.css';
-import {FloatingCta} from './_components/floating-cta';
-import {SiteHeader} from './_components/site-header';
-import {SiteFooter} from './_components/site-footer';
-import {Providers} from './providers';
+import FloatingCta from './_components/floating-cta';
+import SiteHeader from './_components/site-header';
+import SiteFooter from './_components/site-footer';
+import Providers from './providers';
 
 export const metadata: Metadata = {
   title: '대주종합청소 | 청소회사 소개페이지',
@@ -11,11 +11,11 @@ export const metadata: Metadata = {
     '대주종합청소의 전문 청소 서비스와 작업 철학을 소개하는 페이지입니다.',
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
     <html lang="ko" className="h-full antialiased">
       <body className="m-0 min-h-screen bg-background text-foreground">
@@ -30,4 +30,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

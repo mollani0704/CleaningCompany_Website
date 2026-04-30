@@ -1,4 +1,4 @@
-import {HeroImageSlider} from './_components/hero-image-slider';
+import HeroImageSlider from './_components/hero-image-slider';
 import Link from 'next/link';
 
 const strengths = [
@@ -41,7 +41,7 @@ const workflow = [
   },
 ];
 
-export default function Home() {
+const Home = () => {
   return (
     <div className="bg-linear-to-b from-page-top via-white to-page-base">
       <section className="mx-auto flex min-h-[calc(100vh-81px)] w-full max-w-7xl items-center px-6 py-20 sm:px-8 lg:px-10">
@@ -187,4 +187,6 @@ export default function Home() {
       </section>
     </div>
   );
-}
+};
+
+export default Home;

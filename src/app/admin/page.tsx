@@ -1,4 +1,4 @@
-import {HeroImageManager} from './_components/hero-image-manager';
+import HeroImageManager from './_components/hero-image-manager';
 
 const dashboardCards = [
   {
@@ -21,7 +21,7 @@ const dashboardCards = [
   },
 ];
 
-export default function AdminPage() {
+const AdminPage = () => {
   return (
     <div className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_18px_50px_rgba(37,99,235,0.08)] sm:p-10">
       <p className="text-sm font-semibold tracking-[0.18em] text-primary">
@@ -58,4 +58,6 @@ export default function AdminPage() {
       <HeroImageManager />
     </div>
   );
-}
+};
+
+export default AdminPage;

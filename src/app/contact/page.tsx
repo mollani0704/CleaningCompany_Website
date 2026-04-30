@@ -1,9 +1,11 @@
-import { ContactSection } from "../_components/contact-section";
+import ContactSection from "../_components/contact-section";
 
-export default function ContactPage() {
+const ContactPage = () => {
   return (
     <div className="bg-linear-to-b from-page-top via-white to-page-base">
       <ContactSection />
     </div>
   );
-}
+};
+
+export default ContactPage;

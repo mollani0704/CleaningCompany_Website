@@ -5,7 +5,7 @@ import {useEffect, useMemo, useState} from 'react';
 
 const MAX_HERO_IMAGES = 7;
 
-export function HeroImageManager() {
+const HeroImageManager = () => {
   const [files, setFiles] = useState<File[]>([]);
 
   const previewItems = useMemo(
@@ -24,7 +24,7 @@ export function HeroImageManager() {
     };
   }, [previewItems]);
 
-  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(event.target.files ?? []);
 
     if (selectedFiles.length > MAX_HERO_IMAGES) {
@@ -36,11 +36,11 @@ export function HeroImageManager() {
 
     setFiles(selectedFiles);
     event.target.value = '';
-  }
+  };
 
-  function removeImage(targetName: string) {
+  const removeImage = (targetName: string) => {
     setFiles(current => current.filter(file => file.name !== targetName));
-  }
+  };
 
   return (
     <section className="mt-12 rounded-[28px] border border-slate-200 bg-slate-50 p-6 sm:p-8">
@@ -125,4 +125,6 @@ export function HeroImageManager() {
       </div>
     </section>
   );
-}
+};
+
+export default HeroImageManager;

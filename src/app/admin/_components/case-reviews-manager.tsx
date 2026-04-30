@@ -2,10 +2,10 @@
 
 import {type ReactNode, useEffect, useId, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
-import {CaseReviewForm} from './case-review-form';
+import CaseReviewForm from './case-review-form';
 import {fetchReviews, reviewsQueryKey} from '../_lib/reviews';
 
-function formatReviewDate(dateString: string | null) {
+const formatReviewDate = (dateString: string | null) => {
   if (!dateString) {
     return '날짜 없음';
   }
@@ -21,7 +21,7 @@ function formatReviewDate(dateString: string | null) {
     month: '2-digit',
     day: '2-digit',
   }).format(date);
-}
+};
 
 type ReviewModalProps = {
   children: ReactNode;
@@ -30,21 +30,21 @@ type ReviewModalProps = {
   title: string;
 };
 
-function ReviewModal({
+const ReviewModal = ({
   children,
   description,
   onClose,
   title,
-}: ReviewModalProps) {
+}: ReviewModalProps) => {
   const titleId = useId();
   const descriptionId = useId();
 
   useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose();
       }
-    }
+    };
 
     document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
@@ -79,9 +79,9 @@ function ReviewModal({
       </div>
     </div>
   );
-}
+};
 
-export function CaseReviewsManager() {
+const CaseReviewsManager = () => {
   const [selectedReviewId, setSelectedReviewId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {
@@ -102,19 +102,19 @@ export function CaseReviewsManager() {
 
   const isEditing = selectedReview !== null;
 
-  function openCreateModal() {
+  const openCreateModal = () => {
     setSelectedReviewId(null);
     setIsModalOpen(true);
-  }
+  };
 
-  function openEditModal(reviewId: string) {
+  const openEditModal = (reviewId: string) => {
     setSelectedReviewId(reviewId);
     setIsModalOpen(true);
-  }
+  };
 
-  function closeModal() {
+  const closeModal = () => {
     setIsModalOpen(false);
-  }
+  };
 
   return (
     <>
@@ -218,4 +218,6 @@ export function CaseReviewsManager() {
       ) : null}
     </>
   );
-}
+};
+
+export default CaseReviewsManager;

@@ -17,7 +17,7 @@ const ctaItems = [
   },
 ];
 
-export function FloatingCta() {
+const FloatingCta = () => {
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-4 z-50 px-4 sm:inset-x-auto sm:right-6 sm:bottom-6 sm:px-0">
       <div className="mx-auto flex max-w-md flex-col gap-3 sm:mx-0 sm:w-[280px]">
@@ -41,4 +41,6 @@ export function FloatingCta() {
       </div>
     </div>
   );
-}
+};
+
+export default FloatingCta;

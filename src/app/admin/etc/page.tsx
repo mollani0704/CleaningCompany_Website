@@ -13,7 +13,7 @@ const miscCards = [
   },
 ];
 
-export default function AdminEtcPage() {
+const AdminEtcPage = () => {
   return (
     <div className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_18px_50px_rgba(37,99,235,0.08)] sm:p-10">
       <p className="text-sm font-semibold tracking-[0.18em] text-primary">
@@ -47,4 +47,6 @@ export default function AdminEtcPage() {
       </div>
     </div>
   );
-}
+};
+
+export default AdminEtcPage;

@@ -10,7 +10,7 @@ const menuItems = [
   {label: '기타', href: '/admin/etc'},
 ];
 
-export function AdminSidebar() {
+const AdminSidebar = () => {
   const pathname = usePathname();
 
   return (
@@ -51,4 +51,6 @@ export function AdminSidebar() {
       </nav>
     </aside>
   );
-}
+};
+
+export default AdminSidebar;

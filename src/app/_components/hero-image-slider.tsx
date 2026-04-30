@@ -13,7 +13,7 @@ const slideImages = [
   "/images/company_logo.png",
 ];
 
-export function HeroImageSlider() {
+const HeroImageSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -45,4 +45,6 @@ export function HeroImageSlider() {
       </div>
     </div>
   );
-}
+};
+
+export default HeroImageSlider;

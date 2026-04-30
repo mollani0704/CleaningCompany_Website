@@ -21,7 +21,7 @@ const companyStrengths = [
   },
 ];
 
-export function CompanySection() {
+const CompanySection = () => {
   return (
     <section className="mx-auto w-full max-w-7xl px-6 py-24 sm:px-8 lg:px-10">
       <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
@@ -57,4 +57,6 @@ export function CompanySection() {
       </div>
     </section>
   );
-}
+};
+
+export default CompanySection;

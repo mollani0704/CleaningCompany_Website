@@ -1,6 +1,6 @@
-import {CaseReviewsManager} from '../_components/case-reviews-manager';
-export default function AdminCasesPage() {
+import CaseReviewsManager from '../_components/case-reviews-manager';
 
+const AdminCasesPage = () => {
   return (
     <div className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_18px_50px_rgba(37,99,235,0.08)] sm:p-10">
       <p className="text-sm font-semibold tracking-[0.18em] text-primary">
@@ -17,4 +17,6 @@ export default function AdminCasesPage() {
       <CaseReviewsManager />
     </div>
   );
-}
+};
+
+export default AdminCasesPage;

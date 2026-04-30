@@ -1,9 +1,11 @@
-import { CasesSection } from "../_components/cases-section";
+import CasesSection from "../_components/cases-section";
 
-export default function CasesPage() {
+const CasesPage = () => {
   return (
     <div className="bg-linear-to-b from-white to-page-base">
       <CasesSection />
     </div>
   );
-}
+};
+
+export default CasesPage;

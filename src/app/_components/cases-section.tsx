@@ -19,7 +19,7 @@ const caseStudies = [
   },
 ];
 
-export function CasesSection() {
+const CasesSection = () => {
   return (
     <section className="mx-auto w-full max-w-7xl px-6 py-24 sm:px-8 lg:px-10">
       <div className="flex flex-col gap-4 sm:max-w-2xl">
@@ -61,4 +61,6 @@ export function CasesSection() {
       </div>
     </section>
   );
-}
+};
+
+export default CasesSection;

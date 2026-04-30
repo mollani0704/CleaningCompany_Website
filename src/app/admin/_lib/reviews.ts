@@ -15,7 +15,7 @@ export type ReviewImageRecord = {
   created_at: string | null;
 };
 
-export async function fetchReviews(): Promise<ReviewRecord[]> {
+export const fetchReviews = async (): Promise<ReviewRecord[]> => {
   const {data, error} = await supabase
     .from('reviews')
     .select('id, title, content, created_at')
@@ -26,17 +26,17 @@ export async function fetchReviews(): Promise<ReviewRecord[]> {
   }
 
   return (data ?? []) as ReviewRecord[];
-}
+};
 
 type SaveReviewInput = {
   content: string;
   title: string;
 };
 
-export async function createReview({
+export const createReview = async ({
   content,
   title,
-}: SaveReviewInput): Promise<string> {
+}: SaveReviewInput): Promise<string> => {
   const {data, error} = await supabase
     .from('reviews')
     .insert([
@@ -57,17 +57,17 @@ export async function createReview({
   }
 
   return data.id;
-}
+};
 
 type UpdateReviewInput = SaveReviewInput & {
   reviewId: string;
 };
 
-export async function updateReview({
+export const updateReview = async ({
   content,
   reviewId,
   title,
-}: UpdateReviewInput): Promise<string> {
+}: UpdateReviewInput): Promise<string> => {
   const {error} = await supabase
     .from('reviews')
     .update({
@@ -81,11 +81,11 @@ export async function updateReview({
   }
 
   return reviewId;
-}
+};
 
-export async function fetchReviewImages(
+export const fetchReviewImages = async (
   reviewId: string,
-): Promise<ReviewImageRecord[]> {
+): Promise<ReviewImageRecord[]> => {
   const {data, error} = await supabase
     .from('review-images')
     .select('id, review_id, image_url, storage_path, display_order, created_at')
@@ -98,7 +98,7 @@ export async function fetchReviewImages(
   }
 
   return (data ?? []) as ReviewImageRecord[];
-}
+};
 
 type UploadReviewImagesInput = {
   files: File[];
@@ -106,11 +106,11 @@ type UploadReviewImagesInput = {
   startOrder?: number;
 };
 
-export async function uploadReviewImages({
+export const uploadReviewImages = async ({
   files,
   reviewId,
   startOrder = 0,
-}: UploadReviewImagesInput): Promise<void> {
+}: UploadReviewImagesInput): Promise<void> => {
   if (files.length === 0) {
     return;
   }
@@ -152,17 +152,17 @@ export async function uploadReviewImages({
   if (error) {
     throw new Error(error.message);
   }
-}
+};
 
 type DeleteReviewImageInput = {
   imageId: string;
   storagePath: string;
 };
 
-export async function deleteReviewImage({
+export const deleteReviewImage = async ({
   imageId,
   storagePath,
-}: DeleteReviewImageInput): Promise<void> {
+}: DeleteReviewImageInput): Promise<void> => {
   const {error: storageError} = await supabase.storage
     .from(REVIEW_IMAGES_BUCKET)
     .remove([storagePath]);
@@ -179,4 +179,4 @@ export async function deleteReviewImage({
   if (error) {
     throw new Error(error.message);
   }
-}
+};

@@ -5,7 +5,7 @@ const companyFields = [
   '상단 헤드라인',
 ];
 
-export default function AdminCompanyPage() {
+const AdminCompanyPage = () => {
   return (
     <div className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_18px_50px_rgba(37,99,235,0.08)] sm:p-10">
       <p className="text-sm font-semibold tracking-[0.18em] text-primary">
@@ -39,4 +39,6 @@ export default function AdminCompanyPage() {
       </div>
     </div>
   );
-}
+};
+
+export default AdminCompanyPage;

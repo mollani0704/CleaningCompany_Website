@@ -1,10 +1,10 @@
-import {AdminSidebar} from './_components/admin-sidebar';
+import AdminSidebar from './_components/admin-sidebar';
 
-export default function AdminLayout({
+const AdminLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
     <div className="bg-linear-to-b from-page-top via-white to-page-base">
       <section className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-8 lg:px-10">
@@ -15,4 +15,6 @@ export default function AdminLayout({
       </section>
     </div>
   );
-}
+};
+
+export default AdminLayout;
