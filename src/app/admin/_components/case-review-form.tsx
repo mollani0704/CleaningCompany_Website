@@ -5,6 +5,7 @@ import {FormEvent, useEffect, useMemo, useState} from 'react';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {
   createReview,
+  deleteReviewImage,
   fetchReviewImages,
   reviewImagesQueryKey,
   reviewsQueryKey,
@@ -92,8 +93,25 @@ export function CaseReviewForm({
       });
     },
   });
+  const deleteReviewImageMutation = useMutation({
+    mutationFn: deleteReviewImage,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({queryKey: reviewImagesQueryKey});
+      setMessage('작업사례 이미지가 삭제되었습니다.');
+      setErrorMessage(null);
+    },
+    onError: error => {
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : '작업사례 이미지 삭제 중 오류가 발생했습니다.',
+      );
+      setMessage(null);
+    },
+  });
 
   const isSubmitting = saveReviewMutation.isPending;
+  const isDeletingImage = deleteReviewImageMutation.isPending;
   const currentImageCount = existingImages.length + selectedFiles.length;
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -138,6 +156,19 @@ export function CaseReviewForm({
     setSelectedFiles(current =>
       current.filter((_, fileIndex) => fileIndex !== targetIndex),
     );
+  }
+
+  function handleExistingImageDelete({
+    imageId,
+    storagePath,
+  }: {
+    imageId: string;
+    storagePath: string;
+  }) {
+    deleteReviewImageMutation.mutate({
+      imageId,
+      storagePath,
+    });
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -319,7 +350,22 @@ export function CaseReviewForm({
                     />
                   </div>
                   <div className="px-3 py-2 text-xs font-semibold text-slate-500">
-                    등록된 이미지
+                    <div className="flex items-center justify-between gap-3">
+                      <span>등록된 이미지</span>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleExistingImageDelete({
+                            imageId: image.id,
+                            storagePath: image.storage_path,
+                          })
+                        }
+                        disabled={isSubmitting || isDeletingImage}
+                        className="shrink-0 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 transition-colors duration-200 hover:border-rose-300 hover:text-rose-600 disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        {isDeletingImage ? '삭제 중...' : '삭제'}
+                      </button>
+                    </div>
                   </div>
                 </article>
               ))}

@@ -121,8 +121,6 @@ export async function uploadReviewImages({
       const safeName = `${crypto.randomUUID()}.${extension}`;
       const storagePath = `public/${reviewId}/${safeName}`;
 
-      console.log('storagePath ===>', storagePath);
-
       const {error: uploadError} = await supabase.storage
         .from(REVIEW_IMAGES_BUCKET)
         .upload(storagePath, file, {
@@ -150,6 +148,33 @@ export async function uploadReviewImages({
   );
 
   const {error} = await supabase.from('review-images').insert(uploadedImages);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}
+
+type DeleteReviewImageInput = {
+  imageId: string;
+  storagePath: string;
+};
+
+export async function deleteReviewImage({
+  imageId,
+  storagePath,
+}: DeleteReviewImageInput): Promise<void> {
+  const {error: storageError} = await supabase.storage
+    .from(REVIEW_IMAGES_BUCKET)
+    .remove([storagePath]);
+
+  if (storageError) {
+    throw new Error(storageError.message);
+  }
+
+  const {error} = await supabase
+    .from('review-images')
+    .delete()
+    .eq('id', imageId);
 
   if (error) {
     throw new Error(error.message);
