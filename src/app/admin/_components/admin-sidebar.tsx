@@ -5,9 +5,9 @@ import {usePathname} from 'next/navigation';
 
 const menuItems = [
   {label: '메인', href: '/admin', exact: true},
-  {label: '회사소개', href: '/admin/company'},
+  // {label: '회사소개', href: '/admin/company'},
   {label: '작업사례', href: '/admin/cases'},
-  {label: '기타', href: '/admin/etc'},
+  // {label: '기타', href: '/admin/etc'},
 ];
 
 const AdminSidebar = () => {

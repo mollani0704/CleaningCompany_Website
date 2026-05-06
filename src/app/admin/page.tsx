@@ -30,13 +30,13 @@ const AdminPage = () => {
       <h1 className="mt-4 text-3xl font-black tracking-[-0.03em] text-slate-950 sm:text-5xl">
         관리자 메인
       </h1>
-      <p className="mt-5 max-w-3xl text-base leading-8 text-slate-600">
+      {/* <p className="mt-5 max-w-3xl text-base leading-8 text-slate-600">
         이 공간은 대주종합청소 사이트의 내용을 관리하기 위한 시작 화면입니다.
         왼쪽 사이드바를 눌러 회사소개, 작업사례, 기타 관리 화면으로 이동해도
         헤더, 푸터, 사이드바는 그대로 유지되고 오른쪽 본문만 바뀝니다.
-      </p>
+      </p> */}
 
-      <div className="mt-10 grid gap-4 xl:grid-cols-3">
+      {/* <div className="mt-10 grid gap-4 xl:grid-cols-3">
         {dashboardCards.map(card => (
           <article
             key={card.title}
@@ -53,7 +53,7 @@ const AdminPage = () => {
             </p>
           </article>
         ))}
-      </div>
+      </div> */}
 
       <HeroImageManager />
     </div>

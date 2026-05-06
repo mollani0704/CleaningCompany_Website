@@ -112,13 +112,17 @@ const HeroImageManager = () => {
     }
 
     if (mainImages.length + nextFiles.length > MAX_MAIN_IMAGES) {
-      setErrorMessage('메인 히어로 이미지는 최대 7장까지 업로드할 수 있습니다.');
+      setErrorMessage(
+        '메인 히어로 이미지는 최대 7장까지 업로드할 수 있습니다.',
+      );
       setMessage(null);
       return;
     }
 
     if (nextTotalSize > MAX_MAIN_IMAGES_TOTAL_SIZE) {
-      setErrorMessage('메인 히어로 이미지 전체 용량은 50MB를 넘을 수 없습니다.');
+      setErrorMessage(
+        '메인 히어로 이미지 전체 용량은 50MB를 넘을 수 없습니다.',
+      );
       setMessage(null);
       return;
     }

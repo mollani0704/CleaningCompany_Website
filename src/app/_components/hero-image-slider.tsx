@@ -17,6 +17,7 @@ const fallbackSlideImages = [
 
 const HeroImageSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitionEnabled, setIsTransitionEnabled] = useState(true);
   const {data: mainImages = []} = useQuery({
     queryKey: mainImagesQueryKey,
     queryFn: fetchMainImages,
@@ -28,27 +29,64 @@ const HeroImageSlider = () => {
         : fallbackSlideImages,
     [mainImages],
   );
-  const visibleIndex = currentIndex % slideImages.length;
+  const trackImages = useMemo(
+    () =>
+      slideImages.length > 1 ? [...slideImages, slideImages[0]] : slideImages,
+    [slideImages],
+  );
+  const visibleIndex =
+    currentIndex > slideImages.length
+      ? currentIndex % slideImages.length
+      : currentIndex;
 
   useEffect(() => {
+    if (slideImages.length <= 1) {
+      return;
+    }
+
     const interval = window.setInterval(() => {
-      setCurrentIndex(prev => (prev + 1) % slideImages.length);
+      setCurrentIndex(prev => prev + 1);
     }, 3200);
 
     return () => window.clearInterval(interval);
   }, [slideImages.length]);
 
+  const handleTransitionEnd = () => {
+    if (currentIndex !== slideImages.length) {
+      return;
+    }
+
+    setIsTransitionEnabled(false);
+    setCurrentIndex(0);
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        setIsTransitionEnabled(true);
+      });
+    });
+  };
+
   return (
     <div className="overflow-hidden rounded-[32px] border border-primary-border/70 bg-white shadow-[0_24px_60px_rgba(13,148,136,0.14)]">
       <div
-        className="flex h-[460px] w-full transition-transform duration-700 ease-out"
+        className={`flex h-[460px] w-full ${
+          isTransitionEnabled
+            ? 'transition-transform duration-700 ease-out'
+            : ''
+        }`}
         style={{transform: `translateX(-${visibleIndex * 100}%)`}}
+        onTransitionEnd={handleTransitionEnd}
       >
-        {slideImages.map((src, index) => (
-          <div key={`${src}-${index}`} className="relative h-full w-full shrink-0 bg-white">
+        {trackImages.map((src, index) => (
+          <div
+            key={`${src}-${index}`}
+            className="relative h-full w-full shrink-0 bg-white"
+          >
             <Image
               src={src}
-              alt={`대주종합청소 대표 이미지 ${index + 1}`}
+              alt={`대주종합청소 대표 이미지 ${
+                (index % slideImages.length) + 1
+              }`}
               fill
               sizes="(min-width: 1024px) 46vw, 100vw"
               unoptimized={src.startsWith('http')}
