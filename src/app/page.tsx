@@ -7,18 +7,21 @@ const strengths = [
     title: '체계적인 현장 체크',
     description:
       '공간 유형에 맞춘 체크리스트로 청소 범위와 우선순위를 명확하게 관리합니다.',
+    imageLabel: '체크리스트 이미지 영역',
   },
   {
     value: '02',
     title: '단정한 서비스 인상',
     description:
       '대주종합청소의 블루 앤 화이트 톤처럼 깔끔하고 신뢰감 있는 응대를 지향합니다.',
+    imageLabel: '청소 현장 이미지 영역',
   },
   {
     value: '03',
     title: '빠른 상담 연결',
     description:
       '전화와 카카오톡 CTA로 고객이 고민 없이 바로 문의할 수 있게 설계했습니다.',
+    imageLabel: '상담 연결 이미지 영역',
   },
 ];
 
@@ -67,35 +70,68 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-7xl px-6 py-24 sm:px-8 lg:px-10">
-        <div className="flex flex-col gap-4 sm:max-w-2xl">
-          <p className="text-sm font-semibold tracking-[0.18em] text-primary">
-            WHY BLUE SHIRT
-          </p>
-          <h2 className="text-3xl font-black tracking-[-0.03em] text-slate-950 sm:text-4xl">
-            대주종합청소가 메인페이지에서
-            <br />
-            먼저 보여줘야 할 신뢰 요소들입니다.
-          </h2>
-        </div>
+      <section className="relative overflow-hidden border-y border-primary-border/50 bg-primary-soft py-24">
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(240,253,250,0.98)_0%,rgba(240,253,250,0.86)_45%,rgba(204,251,241,0.56)_100%)]" />
+        <div className="relative mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-10">
+          <div className="grid min-h-[540px] gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold tracking-[0.18em] text-primary">
+                WHY BLUE SHIRT
+              </p>
+              <h2 className="mt-6 text-4xl font-black leading-tight text-slate-950 sm:text-5xl">
+                대주종합청소가 메인페이지에서
+                <br />
+                먼저 보여줘야 할 신뢰 요소들입니다.
+              </h2>
+              <p className="mt-8 max-w-xl text-base leading-8 text-slate-600">
+                청소는 보이지 않는 곳까지 완벽해야 합니다. 대주종합청소는
+                체계적인 관리와 빠른 대응으로 고객의 공간을 언제나 쾌적하게
+                만듭니다.
+              </p>
+            </div>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-3">
-          {strengths.map(item => (
-            <article
-              key={item.value}
-              className="rounded-[24px] border border-slate-200 bg-white p-7 shadow-[0_18px_50px_rgba(37,99,235,0.08)]"
-            >
-              <p className="text-sm font-black tracking-[0.24em] text-primary">
-                {item.value}
-              </p>
-              <h3 className="mt-4 text-2xl font-bold tracking-[-0.03em] text-slate-950">
-                {item.title}
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-slate-600">
-                {item.description}
-              </p>
-            </article>
-          ))}
+            <div className="relative min-h-[360px] overflow-hidden rounded-[32px] border border-white/70 bg-white/70 shadow-[0_30px_90px_rgba(13,148,136,0.18)]">
+              <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.98),rgba(204,251,241,0.42))]" />
+              <div className="absolute right-8 bottom-0 h-[88%] w-[54%] rounded-t-full bg-primary/15" />
+              <div className="absolute right-16 bottom-0 h-[78%] w-[30%] rounded-t-[120px] bg-primary shadow-[0_28px_70px_rgba(13,148,136,0.22)]" />
+              <div className="absolute right-[19%] top-[16%] h-20 w-20 rounded-full bg-primary-dark" />
+              <div className="absolute right-[34%] top-[30%] h-8 w-36 rotate-[-18deg] rounded-full bg-primary" />
+              <div className="absolute right-[8%] top-[24%] h-8 w-44 rotate-[-18deg] rounded-full bg-secondary" />
+              <div className="absolute right-[3%] top-[15%] h-28 w-5 rotate-[-18deg] rounded-full bg-slate-300" />
+              <div className="absolute right-[2%] top-[11%] h-7 w-24 rotate-[-18deg] rounded-md bg-white shadow-[0_12px_30px_rgba(15,23,42,0.12)]" />
+              <div className="absolute left-8 bottom-8 rounded-full border border-primary-border bg-white/85 px-4 py-2 text-xs font-bold tracking-[0.16em] text-primary shadow-sm">
+                대표 이미지 영역
+              </div>
+            </div>
+          </div>
+
+          <div className="relative z-10 mt-[-42px] grid gap-6 lg:grid-cols-3">
+            {strengths.map(item => (
+              <article
+                key={item.value}
+                className="grid min-h-[260px] overflow-hidden rounded-[26px] border border-white/80 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.08)] sm:grid-cols-[1fr_0.9fr] lg:grid-cols-1 xl:grid-cols-[1fr_0.9fr]"
+              >
+                <div className="p-7">
+                  <p className="text-sm font-black tracking-[0.24em] text-primary">
+                    {item.value}
+                  </p>
+                  <h3 className="mt-5 text-2xl font-bold text-slate-950">
+                    {item.title}
+                  </h3>
+                  <p className="mt-5 text-sm leading-7 text-slate-600">
+                    {item.description}
+                  </p>
+                </div>
+
+                <div className="relative min-h-44 bg-primary-soft">
+                  <div className="absolute inset-4 rounded-[22px] border border-dashed border-primary-border bg-white/70" />
+                  <div className="absolute inset-x-7 bottom-7 rounded-2xl bg-primary/10 px-4 py-3 text-center text-xs font-bold text-primary">
+                    {item.imageLabel}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
