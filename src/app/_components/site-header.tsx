@@ -3,6 +3,11 @@ import Link from "next/link";
 
 const navigationItems = [
   { label: "회사소개", href: "/company" },
+  { label: "이사청소", href: "/moving-cleaning" },
+  { label: "상가청소", href: "/store-cleaning" },
+  { label: "주방청소", href: "/kitchen-cleaning" },
+  { label: "바닥코팅", href: "/floor-coating" },
+  { label: "공장청소", href: "/factory-cleaning" },
   { label: "작업사례", href: "/cases" },
   { label: "문의", href: "/contact" },
 ];
@@ -10,7 +15,7 @@ const navigationItems = [
 const SiteHeader = () => {
   return (
     <header className="sticky top-0 z-50 border-b border-white/15 bg-primary text-white shadow-[0_14px_40px_rgba(15,23,42,0.22)]">
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-4 sm:px-8 lg:px-10">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-6 py-4 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-10">
         <Link
           href="/"
           className="flex items-center gap-4 transition-transform duration-200 hover:-translate-y-0.5"
@@ -36,13 +41,13 @@ const SiteHeader = () => {
           </div>
         </Link>
 
-        <nav aria-label="주요 메뉴">
-          <ul className="flex items-center gap-2 sm:gap-3">
+        <nav aria-label="주요 메뉴" className="w-full overflow-x-auto lg:w-auto">
+          <ul className="flex min-w-max items-center gap-2 sm:gap-3">
             {navigationItems.map((item) => (
               <li key={item.label}>
                 <Link
                   href={item.href}
-                  className="rounded-full px-4 py-2 text-sm font-medium text-white/88 transition-colors duration-200 hover:bg-white/10 hover:text-white"
+                  className="block whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium text-white/88 transition-colors duration-200 hover:bg-white/10 hover:text-white"
                 >
                   {item.label}
                 </Link>
