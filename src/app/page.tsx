@@ -70,10 +70,12 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="relative overflow-hidden border-y border-primary-border/50 bg-primary-soft py-24">
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(240,253,250,0.98)_0%,rgba(240,253,250,0.86)_45%,rgba(204,251,241,0.56)_100%)]" />
+      <section className="relative overflow-hidden border-y border-primary-border/50 bg-page-base py-20 sm:py-24">
+        <div className="absolute inset-x-0 top-0 h-[600px] bg-[url('/images/main/main_intro_background.png')] bg-cover bg-[position:64%_top] bg-no-repeat sm:h-[660px] lg:h-[640px] lg:bg-[length:auto_100%] lg:bg-[position:right_top]" />
+        <div className="absolute inset-x-0 top-0 h-[600px] bg-[linear-gradient(180deg,rgba(248,255,254,0.94)_0%,rgba(248,255,254,0.74)_56%,rgba(248,255,254,0.08)_100%)] sm:h-[660px] lg:h-[640px] lg:bg-[linear-gradient(90deg,rgba(248,255,254,0.99)_0%,rgba(248,255,254,0.96)_35%,rgba(248,255,254,0.58)_50%,rgba(248,255,254,0.08)_70%,rgba(248,255,254,0)_100%)]" />
+        <div className="absolute inset-x-0 top-[360px] h-80 bg-linear-to-b from-transparent via-page-base/50 to-page-base sm:top-[420px] lg:top-[430px]" />
         <div className="relative mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-10">
-          <div className="grid min-h-[540px] gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div className="flex min-h-[430px] items-center pt-8 pb-20 sm:pb-24 lg:min-h-[500px]">
             <div className="max-w-2xl">
               <p className="text-sm font-semibold tracking-[0.18em] text-primary">
                 WHY BLUE SHIRT
@@ -89,23 +91,9 @@ const Home = () => {
                 만듭니다.
               </p>
             </div>
-
-            <div className="relative min-h-[360px] overflow-hidden rounded-[32px] border border-white/70 bg-white/70 shadow-[0_30px_90px_rgba(13,148,136,0.18)]">
-              <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.98),rgba(204,251,241,0.42))]" />
-              <div className="absolute right-8 bottom-0 h-[88%] w-[54%] rounded-t-full bg-primary/15" />
-              <div className="absolute right-16 bottom-0 h-[78%] w-[30%] rounded-t-[120px] bg-primary shadow-[0_28px_70px_rgba(13,148,136,0.22)]" />
-              <div className="absolute right-[19%] top-[16%] h-20 w-20 rounded-full bg-primary-dark" />
-              <div className="absolute right-[34%] top-[30%] h-8 w-36 rotate-[-18deg] rounded-full bg-primary" />
-              <div className="absolute right-[8%] top-[24%] h-8 w-44 rotate-[-18deg] rounded-full bg-secondary" />
-              <div className="absolute right-[3%] top-[15%] h-28 w-5 rotate-[-18deg] rounded-full bg-slate-300" />
-              <div className="absolute right-[2%] top-[11%] h-7 w-24 rotate-[-18deg] rounded-md bg-white shadow-[0_12px_30px_rgba(15,23,42,0.12)]" />
-              <div className="absolute left-8 bottom-8 rounded-full border border-primary-border bg-white/85 px-4 py-2 text-xs font-bold tracking-[0.16em] text-primary shadow-sm">
-                대표 이미지 영역
-              </div>
-            </div>
           </div>
 
-          <div className="relative z-10 mt-[-42px] grid gap-6 lg:grid-cols-3">
+          <div className="relative z-10 mt-[-58px] grid gap-6 lg:grid-cols-3">
             {strengths.map(item => (
               <article
                 key={item.value}
