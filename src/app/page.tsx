@@ -1,4 +1,5 @@
 import HeroImageSlider from './_components/hero-image-slider';
+import Image from 'next/image';
 import Link from 'next/link';
 
 const strengths = [
@@ -7,21 +8,27 @@ const strengths = [
     title: '체계적인 현장 체크',
     description:
       '공간 유형에 맞춘 체크리스트로 청소 범위와 우선순위를 명확하게 관리합니다.',
-    imageLabel: '체크리스트 이미지 영역',
+    image: '/images/main/main_intro_doc.png',
+    imageWrapClass:
+      'right-3 bottom-4 h-[80%] w-[48%] sm:right-5 sm:h-[86%] lg:right-3 lg:h-[78%] xl:right-5 xl:h-[86%]',
   },
   {
     value: '02',
     title: '단정한 서비스 인상',
     description:
       '대주종합청소의 블루 앤 화이트 톤처럼 깔끔하고 신뢰감 있는 응대를 지향합니다.',
-    imageLabel: '청소 현장 이미지 영역',
+    image: '/images/main/main_intro_people.png',
+    imageWrapClass:
+      'right-0 bottom-0 h-[94%] w-[54%] sm:w-[50%] lg:h-[86%] lg:w-[62%] xl:h-[94%] xl:w-[54%]',
   },
   {
     value: '03',
     title: '빠른 상담 연결',
     description:
       '전화와 카카오톡 CTA로 고객이 고민 없이 바로 문의할 수 있게 설계했습니다.',
-    imageLabel: '상담 연결 이미지 영역',
+    image: '/images/main/main_intro_call.png',
+    imageWrapClass:
+      'right-0 bottom-0 h-[92%] w-[45%] sm:right-2 sm:h-[98%] lg:right-0 lg:h-[88%] lg:w-[52%] xl:h-[98%] xl:w-[45%]',
   },
 ];
 
@@ -78,7 +85,7 @@ const Home = () => {
           <div className="flex min-h-[430px] items-center pt-8 pb-20 sm:pb-24 lg:min-h-[500px]">
             <div className="max-w-2xl">
               <p className="text-sm font-semibold tracking-[0.18em] text-primary">
-                WHY BLUE SHIRT
+                Why Daeju Cleaning Service
               </p>
               <h2 className="mt-6 text-4xl font-black leading-tight text-slate-950 sm:text-5xl">
                 대주종합청소가 메인페이지에서
@@ -97,24 +104,33 @@ const Home = () => {
             {strengths.map(item => (
               <article
                 key={item.value}
-                className="grid min-h-[260px] overflow-hidden rounded-[26px] border border-white/80 bg-white shadow-[0_24px_70px_rgba(15,23,42,0.08)] sm:grid-cols-[1fr_0.9fr] lg:grid-cols-1 xl:grid-cols-[1fr_0.9fr]"
+                className="group relative min-h-[255px] overflow-hidden rounded-[26px] border border-white/85 bg-white/95 shadow-[0_24px_70px_rgba(15,23,42,0.08)] backdrop-blur-sm"
               >
-                <div className="p-7">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_50%,rgba(14,165,233,0.12),transparent_46%)]" />
+                <div
+                  className={`absolute ${item.imageWrapClass} transition duration-500 group-hover:scale-[1.035]`}
+                >
+                  <Image
+                    src={item.image}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1280px) 18vw, (min-width: 1024px) 22vw, 45vw"
+                    className="object-contain object-right-bottom drop-shadow-[0_18px_28px_rgba(15,23,42,0.12)]"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.98)_0%,rgba(255,255,255,0.94)_42%,rgba(255,255,255,0.52)_64%,rgba(255,255,255,0)_100%)] lg:bg-[linear-gradient(90deg,rgba(255,255,255,0.98)_0%,rgba(255,255,255,0.95)_45%,rgba(255,255,255,0.56)_66%,rgba(255,255,255,0)_100%)]" />
+
+                <div className="relative z-10 flex min-h-[255px] max-w-[58%] flex-col justify-between p-7 sm:max-w-[54%] lg:max-w-[64%] xl:max-w-[58%]">
                   <p className="text-sm font-black tracking-[0.24em] text-primary">
                     {item.value}
                   </p>
-                  <h3 className="mt-5 text-2xl font-bold text-slate-950">
-                    {item.title}
-                  </h3>
-                  <p className="mt-5 text-sm leading-7 text-slate-600">
-                    {item.description}
-                  </p>
-                </div>
-
-                <div className="relative min-h-44 bg-primary-soft">
-                  <div className="absolute inset-4 rounded-[22px] border border-dashed border-primary-border bg-white/70" />
-                  <div className="absolute inset-x-7 bottom-7 rounded-2xl bg-primary/10 px-4 py-3 text-center text-xs font-bold text-primary">
-                    {item.imageLabel}
+                  <div>
+                    <h3 className="text-2xl font-bold text-slate-950">
+                      {item.title}
+                    </h3>
+                    <p className="mt-5 text-sm leading-7 text-slate-600">
+                      {item.description}
+                    </p>
                   </div>
                 </div>
               </article>
