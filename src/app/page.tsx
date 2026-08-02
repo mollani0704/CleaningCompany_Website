@@ -95,7 +95,7 @@ const processHighlights = [
 const Home = () => {
   return (
     <div className="bg-linear-to-b from-page-top via-white to-page-base">
-      <section className="mx-auto flex min-h-[calc(100vh-81px)] w-full max-w-[1560px] items-center px-4 py-20 sm:px-6 lg:px-8">
+      <section className="mx-auto flex min-h-[calc(100vh-81px)] w-full max-w-[1560px] items-center px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <div className="grid w-full gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div className="max-w-3xl">
             <p className="mb-5 inline-flex rounded-full border border-primary-border bg-white px-4 py-1.5 text-sm font-semibold text-primary shadow-sm">
